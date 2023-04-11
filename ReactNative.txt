@@ -1,0 +1,453 @@
+				React Native
+.....................................................................................
+What is React Native?
+
+1.React Native is lib for building native mobile apps 
+2.React Native combines the best parts of native development with React, a best-in-class  JavaScript library for building user interfaces.
+
+Mobile App development:
+
+ Mobile apps are built using mobile platforms and os.
+
+Mobile platforms:
+1.Android
+2.Ios
+Mobile App development:
+
+ Mobile apps are built using mobile platforms and os.
+
+Mobile platforms:
+1.Android
+2.Ios
+
+Mobile devices are acting front end devices, user interfaces communicates back end services.
+
+Dev:
+ 1.user interface developer/front end developer
+ 2.back end developer
+ 3.full stack developer.
+
+Front end developer who dev apps for  front devices.
+
+Devices:
+ 1.computers - desktop
+ 2.Hand held devices- Mobiles,Tabs..
+ 3.TV,Game consoles
+ 4.IOT devices- It could be any - watches,car,industrial apps,
+
+Dev generally build apps for desktops:
+  Standalone desktop apps
+  Browser based apps- javascript,html,css - react,angular,vue.....
+
+Mobile /Tab apps:
+ Dev builds apps for android platform using java , kotlin pl.
+ in iOS development, you use Swift or Objective-C.
+....................................................................................
+			 How to build Mobile App
+....................................................................................
+Types of mobile Apps:
+.....................
+
+1.Native Mobile
+2.Web apps
+3.Hybrid apps
+
+1.Native Mobile
+   Mobile App built by using native platform languages- java/kotiln / Swift.
+2.Web apps
+   Apps built for browsers -Mobile browsers
+3.Hybrid  apps
+   built apps using javascript but it wont run inside browser, runs inside mobile using
+  container(WebView).
+
+
+Hybrid apps:
+
+ Application built using javascript,css,html,looks like native apps.
+
+Why Hybrid Apps?
+
+-incase native apps, we need to maintain two code base for both platform.
+
+Why not to build one single portable app for all platforms?
+
+ That is birth of hybrid apps.
+
+Hybrids apps can be built using existing web tech- js,css,html.
+Js is simple dom language, how to acess platform services such as contacts,networks,storage..
+- a lib was created -cordova , based on cordova adobe started building a framework on top of the cordova , called phoneGap.
+
+...........................................................................................
+
+How to build mobile native apps in portable way using same javascript technology without html and css?
+
+Generally native apps are built using native platform languages like "kotlin/java"
+or swift.
+Building native apps using javascript language
+            That is birth of React Native.
+
+One language for both platforms.
+.....................................................................................
+React Native Architecture :
+...........................
+
+Application Architecture.
+React Native Runtime Archtecture.
+
+
+Application Architecture:
+  React native apps are written using react core principles.
+ -Component
+ -Props
+ -State
+ -Event Handling
+ -Context api
+ -Redux
+ +
+ Mobile Features
+  Network
+  Sensors
+  Contacts
+  Locations
+  Permission
+  Auido
+  Video
+  etc...
+How to design user interfaces?
+ In browser based apps ,we use html,css
+ In Mobile apps we never use html , css
+
+Since react uses html and css to create markup using "JSX" language which is for browser.
+
+For Mobile apps , react uses "Mobile Markup syntax" using jsx language which is for mobile apps.
+
+React native uses Platform independent markup syntax for "user interface elements"
+for eg: 
+
+ If i use Button element/component - i dont mean the button for ios or android.
+
+React Native Architecture :
+...........................
+
+React native applications are written using react(js) core principles
+ -Component
+ -Props
+ -State
+ -Event Handling
+
+Every react native apps are simple javascript code.
+
+In React Native, there is no webview concept. React native never run inside browser.
+
+Types of React Native code:
+
+React Native code consist of Two things:
+.......................................
+
+1.UI MARK UP Code
+   -  incase of react , html is mark up
+
+UI Mark Up code for React native:
+
+React native does not use html language to build ui elements.
+React Native provides a high level ui components already written, so we can use those
+components only.Why?
+ We are building portable application either for android or ios.
+So we need generic concept for both  platforms. 
+For that React native provides a generic components for both platforms.
+
+Compilation:
+
+What is it? What is happening during compilation?
+
+Source code is converted into another source code - Compilation.
+Another code is platform specific code. android code or ios code.
+if i wirte ui components, ui components will be converted to platform spefic components.
+javascript code will be emitted as it is-app code.
+
+
+
+2.Application logic code
+   - js code - apis,state,props......
+
+
+1.Source Code
+    written in react - UI Code and app logic
+
+2.Compiled code
+    code converted into platform specific code.
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+How react native apps are executed?  Execution Model:
+.....................................................
+
+All views are executed by platform runtimes eg: android by art.
+All javascript is executed by Hermes  Js engine.
+/////////////////////////////////////////////////////////////////////////////////////....................................................................................
+				How to begin react native apps
+.....................................................................................
+
+React native apps can be built using two work flows.
+
+1.Native Work flow
+
+ If you are already familiar with mobile development, you may want to use React Native CLI.
+ It requires Xcode or Android Studio to get started. If you already have one of these tools installed, you should be able to get up and running within a few minutes. If they are not installed, you should expect to spend about an hour installing and configuring them.
+
+2.Expo Work Flow.
+  If you are new to mobile development, the easiest way to get started is with Expo CLI. Expo is a set of tools built around React Native and, while it has many features, the most relevant feature for us right now is that it can get you writing a React Native app within minutes
+
+Native work flow:
+ 
+if you want to build professional mobile app you need lot of infrastructure.
+ UI Components
+    -Views,Text,Labels,ListViews,ScrollView,TabView...........
+
+React native core team provides all core components necessary to build mobile apps.
+
+What if i want more components which is not supported by react core team.
+
+-Community -https://reactnative.directory/
+
+Expo Work flow:
+...............
+What is expo?
+
+ Expo is a framework and a platform for universal React applications. It is a set of tools and services built around React Native and native platforms that help you develop, build, deploy, and quickly iterate on iOS, Android, and web apps from the same JavaScript/TypeScript codebase.
+...................................................................................
+Native work flow setup:
+......................
+
+Setup:
+1.node.js
+2.jdk 11 - openjdk -microsoft openjdk
+3.set JAVA_HOME
+4.Install Android Studio
+5.Install Android SDK
+6.Configure sdk home and path 
+7.vs code
+
+Creating a new application
+..........................
+
+npx react-native@latest init AwesomeProject
+.....................................................................................
+
+Folders and files of React Native Project:
+.........................................
+
+package.json
+
+-react
+-react-native
+
+
+babel.config.js
+  Transpiler configuration for converting jsx code into javascript code.
+
+metro.js
+The JavaScript bundler for React Native
+It transforms code into native and js code.
+
+tsconfig.json
+  If you build react native with typescript then you can configure this file.
+
+app.json
+  Application configuration which is supplied to build system to create mobile apps.
+
+index.js
+  It is entry file for react native apps.
+
+App.js /App.tsx(typescript syntax):
+   It is entry component.
+
+How to start React native app?
+
+AppRegistry:
+
+ AppRegistry is the js entry point to running all React native apps.
+App Root components should register themselves with AppRegistry.registerComponent, then the native system can load the bundle for the app and then actually run the app when its ready by invoking AppRegistry.runApplication
+  
+AppRegistry.registerComponent(appName, () => App);
+
+
+ios and android folders
+  These folders are going to have platform specific code.
+....................................................................................
+
+React native concepts:
+
+1.components
+  Component is a widget(button,textbox,image)
+
+React Native offers platform independent and platform specific built in components.
+
+In react js , Components can be created in many ways
+
+1.variable pattern
+  
+  const Header=<h1>Header</h1>
+
+2.functional pattern
+  const Header = props=><h1>Header</h1>
+
+3.class pattern
+  class Header extends React.Component {
+
+ 	render(){
+	  return <h1>Header</h1>
+	}
+  }
+
+In React native also we can create components in the same way.
+
+React Native does not offer any html elements in order to start.
+
+Basic Components:
+.................
+Container components:
+
+  In React                                    In React Native
+
+  <div><header><footer>                       <View>
+
+Container:
+
+<View>
+ =>It is most fundamental component for building a UI.
+ =>View is a container that supports layouts,mobile features such as touch,accessiblity
+=>View maps directly to the native view equivalent on what ever platform React Native is running on whether it is "UIView,android.view, div"
+
+Displaying Text:Text
+....................
+A Component for displaying text
+
+<Text>Your Text</Text>
+
+App.js
+import { View, Text } from 'react-native';
+
+const App = () => {
+    return (
+        <View>
+            <Text>Hello,React Native</Text>
+        </View>
+    );
+};
+
+export default App;
+.....................................................................................
+			 Component Composition
+...................................................................................
+
+Folder structure of React Native apps:
+
+React native team does not give any standard structure to organize the project,
+There is mostly recommended structure
+
+AwesomeProject:
+  -components
+     users
+       -User.jsx
+       -user.api.js
+  -screens
+     home
+     dashboard
+  -store
+  -index.js
+  -App.js /tsx
+
+
+eg:
+
+AwesomeProject/components/Greeter.jsx
+
+import { View, Text } from 'react-native'
+import Hello from './Hello';
+
+const Greeter = () => {
+    return <View>
+        <Text>Welcome to React Native</Text>
+        <Hello />
+    </View>
+}
+export default Greeter;
+
+
+AwesomeProject/components/Hello.jsx
+
+import { View, Text } from 'react-native'
+
+const Hello = () => {
+    return <View>
+        <Text>Hello React Native!</Text>
+    </View>
+}
+export default Hello;
+.....................................................................................
+			  How to make your ui more interactive
+
+Data Binding.
+
+React data binding techniques;
+
+In react data can be handled in two ways
+
+1.Props pattern
+2.State Pattern
+
+Props Pattern:
+ Passing data from the parent component to child component.
+
+<Hello propName={Propvalue}/>
+
+Hello.jsx
+import { View, Text } from 'react-native'
+
+// const Hello = props => {
+//     return <View>
+//         <Text>{props.text}</Text>
+//     </View>
+// }
+// const Hello = props => {
+//     const { text } = props
+//     return <View>
+//         <Text>{text}</Text>
+//     </View>
+// }
+// const Hello = ({text}) => {
+//     return <View>
+//         <Text>{text}</Text>
+//     </View>
+// }
+const Hello = ({ text }) => <View>
+    <Text>{text}</Text>
+</View>
+
+export default Hello;
+
+Greeter.jsx
+import { View, Text } from 'react-native'
+import Hello from './Hello';
+
+const Greeter = () => {
+    return <View>
+        <Text>Welcome to React Native</Text>
+        <Hello text="Hello React Native" />
+        <Hello text="Hello Mobile" />
+    </View>
+}
+export default Greeter;
+...
+
+Assigment:
+Create User Component pass user details from the app component
+ => user id,name,address: { city,state },status:boolean
+
+
+
+
+
+
+
