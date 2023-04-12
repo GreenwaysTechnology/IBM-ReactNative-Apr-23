@@ -1,20 +1,34 @@
-import { View, Text } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
-const Greeter = props => {
+const Message = props => {
+    return <>
+        <Text style={styles.label}>{props.message}</Text>
+        <Text style={{
+            fontSize: 90,
+            fontWeight: 'bold',
+            fontFamily: "TGaramond",
+            color: '#61dafb',
+            borderWidth: 4
+        }}>{props.message}</Text>
 
-    return <View>
-        <Text>{props.children}</Text>
-    </View>
-}
-const Hello = props => {
-    return <Text>Hello</Text>
+    </>
 }
 
 const App = () => {
     return <View>
-        <Greeter>
-            <Hello />
-        </Greeter>
+        <Message message="Hello" />
     </View>
+
 }
 export default App;
+
+//Style sheet Object 
+const styles = StyleSheet.create({
+    label: {
+        fontSize: 90,
+        fontWeight: 'bold',
+        fontFamily: "TGaramond",
+        color: '#61dafb',
+        borderWidth: 4
+    }
+})

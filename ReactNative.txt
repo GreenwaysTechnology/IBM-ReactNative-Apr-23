@@ -621,14 +621,349 @@ const App = () => {
 export default App;
 
 3.Dynamic Prop : State as prop
-.....................................................................................   
+.....................................................................................   			      List 
 
+render more items on single screen:
+import { View, Text } from 'react-native'
 
+const App = () => {
+    return <View>
+          <Text>Hello</Text>
+          <Text>Hello</Text> 
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text> 
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text> 
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text> 
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text> 
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text> 
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text> 
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text> 
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+    </View>
+}
+export default App;
 
+When you render this , you will not able to see more items on single screen.
+..................................................................................
+				Scroll Behaviour
+....................................................................................
+			Types of Views
 
+ ->View
+ ->ScrollView
+ ->ListView
+    ->FlatList
+    ->SectionList
 
+->View
+   View is going to hold child elements , act as container
+->ScrollView
+   View is going to hold child elements,act as container with scrollbar 
 
+ScrollView:
+  It is generic scrolling container that can multiple elements/components.
+  ScrollView supports horizontal or Vertical View.
 
+import {Text, ScrollView } from 'react-native'
+
+const App = () => {
+    return <ScrollView>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+        <Text>Hello</Text>
+    </ScrollView>
+}
+export default App;
+...................................................................................
+				List View
+.....................................................................................
+
+FlatList:
+=>FlatList component displays a scrolling list of changing but with structured data.
+=>FlatList works well for long list of data,where no of items change over time.
+=>FlatList provides good perfomance benefits over ScrollView
+
+   ScrollView displays the data/items at once, if we have more items , it will take    time
+   FlatList only renders elements that are currently showing on the screen, not all    elements at once
+
+In React:
+
+{array.map(item=><li>{item.text}</li>}
+
+FlatList:
+
+ <FlatList data={TODOS} renderItem={(obj)=>{
+     return <Text >{obj.item.todo.title}</Text>
+ }} />
+
+data:
+  Data prop is called datasource which is plain array
+
+renderItem:
+  Takes an item from data prop and renders it into the list.
  
+renderItem({
+ item:ItemObject(todo,Customer),
+ index:number,
+ separators: {
+   highlight:()=>{},
+   unhighlight:()=>{},
+   updateProps:(select:'loading'|'trailing',newProps:any)
+  
+ }
+})
+
+keyExtractor:
+  keyExtractor={(item)=>item.id}
+
+....
+
+import { FlatList, Text, View } from 'react-native'
+import TODOS from './mockdata/todos'
+
+
+const Todo = props => {
+    return <View>
+        <Text>Todo</Text>
+        {/* <FlatList
+            data={props.todos}
+            renderItem={(obj) => {
+                console.log(obj)
+                return <Text>{obj.item.title}</Text>
+            }} /> */}
+        {/* <FlatList
+            data={props.todos}
+            renderItem={({item}) => {
+                console.log(item)
+                return <Text>{item.title}</Text>
+            }} /> */}
+        {/* <FlatList
+            data={props.todos}
+            renderItem={({ item: { title } }) => {
+                return <Text>{title}</Text>
+            }} /> */}
+        <FlatList
+            data={props.todos}
+            renderItem={({ item: { title } }) => <Text>{title}</Text>}
+            keyExtractor={item => item.id}
+        />
+    </View>
+}
+
+
+const App = () => {
+    return <View>
+        <Todo todos={TODOS} />
+    </View>
+
+}
+export default App;
+...................................................................................
+                          Section List
+..................................................................................
+
+It is special list which shows data based on category, showing nested array data
+
+<SectionList sections={list} renderItem=>{} renderSectionHeader={} keyExtractor={} >
+
+Array must have data key to render item.
+
+mock-data/courses.js
+const COURSELIST = [
+  {
+    title: 'User Interface',
+    data: [
+      'HTML',
+      'CSS',
+      'javascript',
+      'Android',
+      'IOS',
+      'Flutter',
+      'React',
+      'Angular',
+      'Vue',
+    ],
+  },
+  {
+    title: 'Back end',
+    data: ['Java', 'C#', 'Microservices', 'Python'],
+  },
+  {
+    title: 'Data Stores',
+    data: ['mysql', 'oracle', 'mongo', 'redis'],
+  },
+];
+export default COURSELIST;
+.....................................................................................
+//Section List 
+import { SectionList, Text, View } from 'react-native'
+import COURSELIST from './mockdata/course'
+
+
+const Course = props => {
+    console.log(props)
+    return <View>
+        <SectionList
+            sections={props.courselist}
+            renderItem={({item}) => {
+                console.log(item)
+                return <Text>{item}</Text>
+            }}
+            keyExtractor={(item, index) => {
+                return item + index
+            }}
+            renderSectionHeader={({ section: { title } }) => {
+                return <Text>{title}</Text>
+            }}
+        />
+        
+       
+
+    </View>
+}
+
+
+const App = () => {
+    return <View>
+        <Course courselist={COURSELIST} />
+    </View>
+
+}
+export default App;
+....................................................................................
+				Styling
+...................................................................................
+In react styles are added through css, react native does not have css language because no html is used.
+
+React Native does not allow css directly.
+We are going to use "javascript style apis"
+Javascript has api to add styles via code.
+
+You must have knowledge to identify the css "js" properties.
+
+
+In html how to apply style via js:
+
+document.getElementById(id).style.property = new style
+element.style.propery =value
+
+https://www.w3schools.com/jsref/dom_obj_style.asp
+
+React Native uses a Object to add styles.
+ =>StyleSheet
+
+StyleSheet:
+ It is  abstraction to css.
+
+import { StyleSheet, Text, View } from 'react-native'
+
+const Message = props => {
+    return <Text style={styles.label}>{props.message}</Text>
+}
+
+const App = () => {
+    return <View>
+        <Message message="Hello" />
+    </View>
+
+}
+export default App;
+
+//Style sheet Object 
+const styles = StyleSheet.create({
+    label: {
+        fontSize: 90,
+        fontWeight:'bold',
+        fontFamily: "TGaramond",
+        color:'#61dafb',
+        borderWidth:4
+    }
+})
+
+
+
+
 
 
