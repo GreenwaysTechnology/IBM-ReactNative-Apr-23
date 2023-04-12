@@ -445,9 +445,190 @@ Assigment:
 Create User Component pass user details from the app component
  => user id,name,address: { city,state },status:boolean
 
+Default Props
+Prop Validation
+class Components
+What can be prop
+
+Default Props:
+ if we dont supply props, the default props can be passed.
+import { View, Text } from 'react-native'
+
+const Greeter = props => {
+    return <View>
+        <Text>{props.message}</Text>
+    </View>
+}
+//default props:if props not supplied we can set default props
+Greeter.defaultProps = {
+    message: 'Welcome'
+}
+//Customer
+const Customer = props => {
+    return <View>
+        <Text>Id : {props.customer.id}</Text>
+    </View>
+}
+// default Props
+Customer.defaultProps = {
+    customer: {
+        id: 0,
+        name: 'Name',
+        address: {
+            city: 'City'
+        }
+    }
+}
+
+const App = () => {
+    const customer = {
+        id: 1,
+        name: 'Subramanian',
+        address: {
+            city: 'Coimbatore'
+        }
+    }
+    return <View>
+        <Greeter message="Hello" />
+        <Greeter />
+        <Customer customer={customer} />
+        <Customer />
+
+    </View>
+}
+export default App;
+....................................................................................
+				Prop validation
+....................................................................................
+
+You know very well javascript is dynamic typed language, the type of variable is only validated during runtime not in compile time.
+
+int a =10;
+a=true
+
+var or let  a =10
+a=true
+a="hello"
+
+Steps
+how to validate prop?
+
+npm install --save prop-types
+
+/* eslint-disable prettier/prettier */
+//prop validation 
+
+import { View, Text } from 'react-native'
+import PropTypes from 'prop-types'; // ES6
+
+const Greeter = props => {
+    return <View>
+        <Text>{props.message}</Text>
+    </View>
+}
+//default props:if props not supplied we can set default props
+Greeter.defaultProps = {
+    message: 'Welcome'
+}
+//prop validation
+Greeter.propTypes = {
+    message: PropTypes.string
+}
+
+const App = () => {
+      return <View>
+        <Greeter message="Hello" />
+        {/* <Greeter message={10} /> */}
+        <Greeter message="welcome"/>
+    </View>
+}
+export default App;
+....................................................................................
+				Class Components
+
+import { View, Text } from 'react-native'
+import PropTypes from 'prop-types'; // ES6
+import React from 'react';
+
+class Greeter extends React.Component {
+    render() {
+        return <View>
+            <Text>{this.props.message}</Text>
+        </View>
+    }
+}
+
+//default props:if props not supplied we can set default props
+Greeter.defaultProps = {
+    message: 'Welcome'
+}
+//prop validation
+Greeter.propTypes = {
+    message: PropTypes.string
+}
+
+const App = () => {
+    return <View>
+        <Greeter message="Hello" />
+        <Greeter/>
+
+    </View>
+}
+export default App;
+.....................................................................................
+			Different types of Props
+.....................................................................................
+
+1.Data as prop
+  any type of data can be passed as prop from parent component to child compoent.
+ primitives(string,numbers,booleans)
+ objects
+ Arrays
+2.Component as prop 
+   The component can be prop to another component.
+  
+  Rendering component:
+   <Greeter/> - self closing : the component do not have any nested/child element
+   <Greeter></Greeter> :The component is enclosed it may take nested /child element
+  
+ <Greeter>
+    <Hello/>
+    <Hai>
+	<Text>Your text</Text>
+    </Hai>
+ </Greeter>
+
+eg:
+import { View, Text } from 'react-native'
+
+const Greeter = props => {
+
+    return <View>
+        <Text>{props.children}</Text>
+    </View>
+}
+const Hello = props => {
+    return <Text>Hello</Text>
+}
+
+const App = () => {
+    return <View>
+        <Greeter>
+            <Hello />
+        </Greeter>
+    </View>
+}
+export default App;
+
+3.Dynamic Prop : State as prop
+.....................................................................................   
 
 
 
 
+
+
+
+ 
 
 
