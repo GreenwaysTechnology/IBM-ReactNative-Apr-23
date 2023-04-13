@@ -1,0 +1,14 @@
+The flex items can be laid out either along the main axis (starting from the main start and ending at the main end) or along the cross axis (starting from the cross start and ending at the cross end).
+
+Main axis: Flex items are laid out along this axis, either horizontally or vertically based upon the flex-direction.
+
+
+Main axis: Flex items are laid out along this axis, either horizontally or vertically based upon the flex-direction.
+Cross axis: It is perpendicular to the main axis and its direction depends on the direction of the main axis.
+Main size: It is the width/height of the flex item depending on the main dimension.
+Cross size: It is the width/height of the flex item depending on the cross dimension.
+
+Flex-direction: row (by default in browser), Flex-direction: column (by default in react-native).
+By default 'div' doesn't have flex in browser, whereas in react native's 'View' flex-box is already applied.
+As you can see main points in cheat sheet, if you want to align things in main-axis then use justifyContent.
+If you want to align things in cross-axis then use alignItems.

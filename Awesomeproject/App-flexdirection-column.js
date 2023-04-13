@@ -3,7 +3,7 @@ import { StyleSheet, View,Text } from 'react-native'
 const MyComponent = props => {
     // Flex container
     return <View style={styles.container}>
-        <Text style={styles.headerStyle}>Flex Direction:RowReverse</Text>
+        <Text style={styles.headerStyle}>Flex Direction:Column</Text>
         <View style={styles.elementsContainer}>
             <View style={{width:50,height:50,backgroundColor:'red'}}/>
             <View style={{width:50,height:50,backgroundColor:'yellow'}}/>
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
         backgroundColor:'black',
         marginLeft: 24,
         marginRight:24,
-        flexDirection:'row-reverse',
+        flexDirection:'column',
         marginBottom:24
     }
 
