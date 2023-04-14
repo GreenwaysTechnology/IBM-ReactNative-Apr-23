@@ -1,35 +1,35 @@
-import { StyleSheet, View,Text } from 'react-native'
 
-const MyComponent = props => {
+import { StyleSheet, View, Text } from 'react-native'
+
+const MyComponent = () => {
     // Flex container
     return <View style={styles.container}>
-        <Text style={styles.headerStyle}>Flex Direction:RowReverse</Text>
-        <View style={styles.elementsContainer}>
-            <View style={{width:50,height:50,backgroundColor:'red'}}/>
-            <View style={{width:50,height:50,backgroundColor:'yellow'}}/>
-            <View style={{width:50,height:50,backgroundColor:'green'}}/>
-        </ View>
+
+        {/* <View style={[styles.box, { backgroundColor: 'powderblue', top: 50, left: 25, position: 'relative' }]} />
+        <View style={[styles.box, { backgroundColor: 'skyblue', top: 50, left: 50, position: 'relative' }]} />
+        <View />
+        <View style={[styles.box, { backgroundColor: 'red', top: 75, left: 75, position: 'relative' }]} /> */}
+        <View style={[styles.box, { backgroundColor: 'powderblue', top: 25, left: 25, position: 'absolute' }]} />
+        <View style={[styles.box, { backgroundColor: 'skyblue', top: 50, left: 50, position: 'absolute' }]} />
+        <View />
+        <View style={[styles.box, { backgroundColor: 'red', top: 75, left: 75, position: 'absolute' }]} />
+        <View />
     </View>
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor: 'pink',
+        minWidth: 200,
+        marginTop: 10,
+        flexDirection: 'row',
+        flexWrap: 'wrap'
+
     },
-    headerStyle: {
-        fontSize: 29,
-        textAlign: 'center',
-        fontWeight: 'bold',
-        marginBottom: 24,
-        color:'blue'
-    },
-    elementsContainer: {
-        flex:1,
-        backgroundColor:'black',
-        marginLeft: 24,
-        marginRight:24,
-        flexDirection:'row-reverse',
-        marginBottom:24
+    box: {
+        height: 50,
+        width: 50
     }
 
 })
