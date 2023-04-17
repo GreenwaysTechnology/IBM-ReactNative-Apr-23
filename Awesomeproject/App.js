@@ -1,41 +1,37 @@
+import { StyleSheet, Text, View, Button, Alert } from 'react-native'
+import { useState } from 'react';
 
-import { StyleSheet, View, Text } from 'react-native'
+const Like = props => {
+    const [like, setLike] = useState(0)
+    //Listener
+    const onLike = () => {
+        setLike(like => {
+            return like + 1
+        })
+    }
 
-const MyComponent = () => {
-    // Flex container
-    return <View style={styles.container}>
-
-        {/* <View style={[styles.box, { backgroundColor: 'powderblue', top: 50, left: 25, position: 'relative' }]} />
-        <View style={[styles.box, { backgroundColor: 'skyblue', top: 50, left: 50, position: 'relative' }]} />
-        <View />
-        <View style={[styles.box, { backgroundColor: 'red', top: 75, left: 75, position: 'relative' }]} /> */}
-        <View style={[styles.box, { backgroundColor: 'powderblue', top: 25, left: 25, position: 'absolute' }]} />
-        <View style={[styles.box, { backgroundColor: 'skyblue', top: 50, left: 50, position: 'absolute' }]} />
-        <View />
-        <View style={[styles.box, { backgroundColor: 'red', top: 75, left: 75, position: 'absolute' }]} />
-        <View />
+    return <View style={page.container}>
+        <Text>Hooks</Text>
+        <Text>{like}</Text>
+        <Button title="Like" onPress={onLike} />
     </View>
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'pink',
-        minWidth: 200,
-        marginTop: 10,
-        flexDirection: 'row',
-        flexWrap: 'wrap'
-
-    },
-    box: {
-        height: 50,
-        width: 50
-    }
-
-})
-
 const App = () => {
-    return <MyComponent />
+    return <Like />
 }
 
-export default App;
+//page style :Common style 
+const page = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 24,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: "pink"
+    }
+})
+
+
+
+export default App; 

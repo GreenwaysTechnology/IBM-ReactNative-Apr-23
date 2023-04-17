@@ -2351,6 +2351,345 @@ marginTop:10
 paddingTop:10
 
 Assignment : Design calculator
+.....................................................................................
+			   Colors 
+.....................................................................................
+
+How to use colors?
+
+ -color names; red blue; which is not mostly recommended.
+ -color values ; #
+
+Api:
+PlatformColor
+  It is used to apply platform default colors
+
+Since our application is build platform independent, how to apply plaftform specific colors.
+for eg: i want to apply android color schemes when i run app in android device, if the same app is executed on IOS , i need to apply ios spcific colors.
+
+How to detect platform?
+ React native offers an api called "Platform"
+
+Platform api properties and methods:
+
+constants
+isPad | isTv | isTesting
+os
+version
+
+methods:
+ select
+
+select method how works?
+ select internally applies if logic to select os
+
+Platform.OS === 'platform' or a Platform.select()
+
+
+Eg: Platform Interformation:
+//Platform information
+
+import { View, Text, StyleSheet, Platform } from 'react-native'
+
+const App = () => {
+
+     return <View style={styles.container}>
+         <Text>Platform Information</Text>
+         <Text>OS : {Platform.OS}</Text>
+         <Text>OS version: {Platform.Version}</Text>
+         <Text>Device Type {Platform.isTV ? "TV" : "Mobile"}</Text>
+         <Text>Platform Constants</Text>
+         <Text>{JSON.stringify(Platform.constants)}</Text>
+     </View>
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor:'pink',
+        fontSize:50,
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
+})
+
+
+export default App;
+....................................................................................
+			How to apply colors based on Platform
+....................................................................................
+How to use colors?
+
+ -color names; red blue; which is not mostly recommended.
+ -color values ; #
+
+Color apis:
+
+PlatformColor
+
+PlatformColor(color1, [color2, ...colorN]);
+
+ You can use the PlatformColor function to access native colors on the target platform by supplying the native color’s corresponding string value
+
+If you pass more than one string value to the PlatformColor function, it will treat the first value as the default and the rest as fallback.
+
+PlatformColor('bogusName', 'linkColor');
+
+Supported colors
+:
+For a full list of the types of system colors supported.
+
+Android:
+R.attr - ?attr prefix
+R.color - @android:color prefix
+
+
+iOS (Objective-C and Swift notations):
+
+UIColor Standard Colors
+UIColor UI Element Colors
+
+select method how works?
+ select internally applies if logic to select os
+
+Platform.OS === 'platform' or a Platform.select()
+
+
+
+import React from 'react';
+import {
+    Platform,
+    PlatformColor,
+    StyleSheet,
+    Text,
+    View
+} from 'react-native';
+
+const App = () => (
+    <View style={styles.container}>
+        <Text style={styles.label}>
+            I am a special label color!
+    </Text>
+    </View>
+);
+
+const styles = StyleSheet.create({
+    label: {
+        padding: 16,
+        ...Platform.select({
+            ios: {
+                color: PlatformColor('label'),
+                backgroundColor:
+                    PlatformColor('systemTealColor'),
+            },
+            android: {
+                color: PlatformColor('?android:attr/textColor'),
+                backgroundColor:
+                    PlatformColor('@android:color/holo_blue_bright'),
+            },
+            default: { color: 'black' }
+        })
+    },
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        ...Platform.select({
+            ios: {
+                color: PlatformColor('label'),
+                backgroundColor:
+                    PlatformColor('systemTealColor'),
+            },
+            android: {
+                color: PlatformColor('?android:attr/textColor'),
+                backgroundColor:
+                    PlatformColor('@android:color/holo_orange_dark'),
+            },
+            default: { color: 'black' }
+        })
+    }
+});
+
+export default App;
+....................................................................................
+				Style Sheet Composition
+...................................................................................
+
+coimbines two styles into one style
+
+StyleeSheet.compose(style1,style2,style3,styleN)
+
+style1 can be overriden by styles2
+import { StyleSheet, Text, View } from 'react-native'
+
+
+
+const App = props => {
+    return <View style={container}>
+        <Text style={text}>Hello</Text>
+    </View>
+}
+//page style :Common style 
+const page = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 24,
+        backgroundColor: "pink"
+    },
+    text: {
+        fontSize: 30,
+        color: '#000'
+    }
+})
+//list styles 
+
+
+const lists = StyleSheet.create({
+    listContainer: {
+        flex: 1,
+        backgroundColor: '#61dafb'
+    },
+    listItem: {
+        fontStyle: 'italic',
+        fontWeight: 'bold'
+    }
+})
+
+//merge twos 
+const container = StyleSheet.compose(page.container, lists.container)
+const text = StyleSheet.compose(page.text, lists.listItem)
+
+
+export default App; 
+................................**********..........................................
+				Dynamic ui
+...................................................................................
+
+State
+.....
+
+=>How to interact with Ui
+=>How to introduce events and listerners
+=>hooks
+=>class vs functional compoents.
+
+
+How to mutate state:
+import { StyleSheet, Text, View, Button, Alert } from 'react-native'
+import React from 'react';
+
+class App extends React.Component {
+    state = {
+        like: 0
+    }
+    //listener 
+    onLike = () => {
+        //Alert.alert('Like')
+        // this.setState((prvState) => {
+        //     //return new state : Immutable 
+        //     return { ...prvState, like: prvState.like + 1 }
+        // })
+        this.setState({
+            like: this.state.like + 1
+        });
+    }
+    render() {
+        return <View style={page.container}>
+            <Text style={page.text}>State</Text>
+            <Text style={page.text}>{this.state.like}</Text>
+            <Button title="Like" onPress={this.onLike} />
+        </View>
+    }
+}
+
+//page style :Common style 
+const page = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 24,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: "pink"
+    },
+    text: {
+        fontSize: 30,
+        color: '#000'
+    }
+})
+
+export default App; 
+....................................................................................
+			How to remove class components?
+
+class components almost gone from the react echo system. rather we use functional components.
+
+Functional components has been refactored with feature called "hooks"
+
+class Components drawbacks:
+..........................
+
+=>Code Reuse
+   if i have written some logic inside class component the same logic i want to resue in another components then we cant reuse.
+
+functional components and Code Reuse:
+......................................
+  via hooks
+
+What is hook?
+ =>hook is just function which carries reusable code, which can be used across application.
+=>hooks eleminate lot of boiler plate code.
+
+React provides lot of built in hooks in order to write complex code.
+
+Hooks features:
+=>hooks are just js functions, which takes args and parameters, returns values too.
+=>hooks starts with "use+FunctionName" which common convention.
+
+import { StyleSheet, Text, View, Button, Alert } from 'react-native'
+import { useState } from 'react';
+
+const Like = props => {
+    const [like, setLike] = useState(0)
+    //Listener
+    const onLike = () => {
+        setLike(like => {
+            return like + 1
+        })
+    }
+
+    return <View style={page.container}>
+        <Text>Hooks</Text>
+        <Text>{like}</Text>
+        <Button title="Like" onPress={onLike} />
+    </View>
+}
+
+const App = () => {
+    return <Like />
+}
+
+//page style :Common style 
+const page = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 24,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: "pink"
+    }
+})
+
+export default App; 
+....................................................................................
+
+Assignment:
+
+1.Build list of content
+ when i click a list item i have show in alert box that item in json format.
+
+2.Write complete calculator logic
+
+Using hooks..
 
 
 
