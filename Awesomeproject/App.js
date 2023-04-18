@@ -1,39 +1,37 @@
-import React from "react";
-import { ImageBackground, StyleSheet, Text, View } from "react-native";
+import * as React from 'react';
+import { Text, View, StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+//stack navigator
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-const image = { uri: "https://reactjs.org/logo-og.png" };
+//create Stack Object
+const Stack = createNativeStackNavigator();
 
-const App = () => (
-  <View style={styles.container}>
-    <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-      <Text style={styles.text}>Inside</Text>
-      <Text style={styles.text}>Inside</Text>
-      <Text style={styles.text}>Inside</Text>
-      <Text style={styles.text}>Inside</Text>
-      <Text style={styles.text}>Inside</Text>
-      <Text style={styles.text}>Inside</Text>
-      <Text style={styles.text}>Inside</Text>
+const Home = () => {
+    return <View style={styles.container}>
+        <Text>Home Screen</Text>
+    </View>
+}
+const Profile = () => {
+    return <View style={styles.container}>
+        <Text>Profile Screen</Text>
+    </View>
+}
 
-    </ImageBackground>
-  </View>
-);
 
+export default function App() {
+    return <NavigationContainer>
+        <Stack.Navigator>
+              <Stack.Screen name="Home" component={Home}/>
+              <Stack.Screen name="Profile" component={Profile}/>
+        </Stack.Navigator>
+    </NavigationContainer>
+}
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  image: {
-    flex: 1,
-    justifyContent: "center"
-  },
-  text: {
-    color: "white",
-    fontSize: 42,
-    lineHeight: 84,
-    fontWeight: "bold",
-    textAlign: "center",
-    backgroundColor: "#000000c0"
-  }
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 });
-
-export default App;
