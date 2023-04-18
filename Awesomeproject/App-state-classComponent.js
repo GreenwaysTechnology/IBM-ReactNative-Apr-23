@@ -16,6 +16,7 @@ class App extends React.Component {
             like: this.state.like + 1
         });
     }
+  
     render() {
         return <View style={page.container}>
             <Text style={page.text}>State</Text>

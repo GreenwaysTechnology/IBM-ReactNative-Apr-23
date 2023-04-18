@@ -1,37 +1,39 @@
-import { StyleSheet, Text, View, Button, Alert } from 'react-native'
-import { useState } from 'react';
+import React from "react";
+import { ImageBackground, StyleSheet, Text, View } from "react-native";
 
-const Like = props => {
-    const [like, setLike] = useState(0)
-    //Listener
-    const onLike = () => {
-        setLike(like => {
-            return like + 1
-        })
-    }
+const image = { uri: "https://reactjs.org/logo-og.png" };
 
-    return <View style={page.container}>
-        <Text>Hooks</Text>
-        <Text>{like}</Text>
-        <Button title="Like" onPress={onLike} />
-    </View>
-}
+const App = () => (
+  <View style={styles.container}>
+    <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+      <Text style={styles.text}>Inside</Text>
+      <Text style={styles.text}>Inside</Text>
+      <Text style={styles.text}>Inside</Text>
+      <Text style={styles.text}>Inside</Text>
+      <Text style={styles.text}>Inside</Text>
+      <Text style={styles.text}>Inside</Text>
+      <Text style={styles.text}>Inside</Text>
 
-const App = () => {
-    return <Like />
-}
+    </ImageBackground>
+  </View>
+);
 
-//page style :Common style 
-const page = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 24,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: "pink"
-    }
-})
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  image: {
+    flex: 1,
+    justifyContent: "center"
+  },
+  text: {
+    color: "white",
+    fontSize: 42,
+    lineHeight: 84,
+    fontWeight: "bold",
+    textAlign: "center",
+    backgroundColor: "#000000c0"
+  }
+});
 
-
-
-export default App; 
+export default App;
