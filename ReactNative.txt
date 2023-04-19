@@ -3328,10 +3328,6 @@ StackNavigator :
  Object used to navigate between screen.
  Stack Object used to  represent stack navigator.
 
-StackNavigator : 
- Object used to navigate between screen.
- Stack Object used to  represent stack navigator.
-
 import { createStackNavigator } from '@react-navigation/stack'
 
 //create Stack Object
@@ -3387,4 +3383,103 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 });
-	
+....................................................................................
+			....................................................................................
+			   How to move between screens
+..................................................................................
+
+Navigating to a new screen​
+
+Every Component receives information from the parent component as a prop.
+When component is rendered via route,React Navigator injects an object called "Navigation" Object as prop to every Component
+
+
+Props;
+Object {
+  "navigation": Object {
+    "addListener": [Function addListener],
+    "canGoBack": [Function canGoBack],
+    "dispatch": [Function dispatch],
+    "getId": [Function getId],
+    "getParent": [Function getParent],
+    "getState": [Function anonymous],
+    "goBack": [Function anonymous],
+    "isFocused": [Function isFocused],
+    "navigate": [Function anonymous],
+    "pop": [Function anonymous],
+    "popToTop": [Function anonymous],
+    "push": [Function anonymous],
+    "removeListener": [Function removeListener],
+    "replace": [Function anonymous],
+    "reset": [Function anonymous],
+    "setOptions": [Function setOptions],
+    "setParams": [Function anonymous],
+  },
+  "route": Object {
+    "key": "Home-V-z_dGCJfqcHgNXxzxRGK",
+    "name": "Home",
+    "params": undefined,
+  },
+
+Eg:
+import * as React from 'react';
+import { Text, View, StyleSheet, Button, Alert } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+//stack navigator
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+//create Stack Object
+const Stack = createNativeStackNavigator();
+
+const Home = (props) => {
+    console.log(props)
+    const { navigation: { navigate } } = props
+    const moveToProfile = evt => {
+        Alert.alert('moving screen')
+        //logic to move from this screen to next screen.
+        // props.navigation.navigate('Profile')
+        //  navigation.navigate('Profile')
+        navigate('Profile')
+    }
+
+    return <View style={styles.container}>
+        <Text>Home Screen</Text>
+        {/* <Button title="Profile" onPress={moveToProfile} /> */}
+        <Button title="Profile" onPress={() => navigate('Profile')} />
+    </View>
+}
+const Profile = () => {
+    return <View style={styles.container}>
+        <Text>Profile Screen</Text>
+    </View>
+}
+
+
+export default function App() {
+    return <NavigationContainer>
+        <Stack.Navigator>
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Profile" component={Profile} />
+        </Stack.Navigator>
+    </NavigationContainer>
+}
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+});
+....................................................................................	
+
+.....................................................................................
+Assignment:
+
+Personal Diary App
+->Show Home Screen
+  --->TodosScreen - AJAX To fetch data from the end point/You can mock data
+        -DetailsTodScreen--> Just display label
+ ---->Diet Screen
+        -DetailsDietScreen
+
