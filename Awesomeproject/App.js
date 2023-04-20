@@ -1,54 +1,27 @@
+/* eslint-disable */
+import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View, Text, StyleSheet, Button } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 
-//create Stack Object
-const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator();
+//Create Drawer
+const Drawer = createDrawerNavigator();
 
-const Home = props => {
-    return <Tab.Navigator>
-        <Tab.Screen name="Messages" component={Messages} />
-        <Tab.Screen name="Feed" component={Feed} />
-    </Tab.Navigator>
-}
+//screens
 
-const Feed = props => {
-    return <View style={styles.container}>
-        <Text>Feed Screen</Text>
-    </View>
-}
+const Feed = () => <Text>Feed</Text>
+const Article = () => <Text>Article</Text>
 
-const Messages = props => {
-    const { navigation } = props;
-    return <View style={styles.container}>
-        <Text>Messages Screen</Text>
-        <Button title="go to Settions" onPress={() => {
-            navigation.navigate('Settings')
-        }} />
-    </View>
-}
-const Settings = props => {
-    return <View style={styles.container}>
-        <Text>Settings Screen</Text>
-    </View>
-}
 function App() {
     return <NavigationContainer>
-        <Stack.Navigator>
-            <Stack.Screen
-                name="Home"
-                component={Home}
-                options={{ headerShown: false }}
-            />
-            <Stack.Screen name="Settings" component={Settings} />
-        </Stack.Navigator>
+        <Drawer.Navigator>
+            <Drawer.Screen name="Feed" component={Feed} />
+            <Drawer.Screen name="Article" component={Article} />
+        </Drawer.Navigator>
     </NavigationContainer>
 
 }
-
 
 const styles = StyleSheet.create({
     container: {

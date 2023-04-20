@@ -4430,5 +4430,1352 @@ const styles = StyleSheet.create({
 });
 
 export default App
+....................................................................................
+				Drawer
+.....................................................................................
+
+Steps to install drawer dependency:
+....................................
+
+1.install dependency:
+
+npm install @react-navigation/drawer
+npm install react-native-gesture-handler react-native-reanimated
+
+2.plugin configuration in babel.config.js
+
+module.exports = {
+  presets: ['module:metro-react-native-babel-preset'],
+  plugins: ['react-native-reanimated/plugin'],
+};
+
+3.reAnimation configuration 
+Follow this url
+https://docs.swmansion.com/react-native-reanimated
+
+After adding the react-native-reanimated/plugin to your project you may encounter a false-positive "Reanimated 2 failed to create a worklet" error. In most cases, this can be fixed by cleaning the application's cache. Depending on your workflow or favorite package manager that could be done by:
+
+yarn start --reset-cache
+npm start -- --reset-cache
+expo start -c
+or other.
+
+This step has to be down after writing code.
+
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { View, Text, StyleSheet, Button } from 'react-native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 
+//Create Drawer
+const Drawer = createDrawerNavigator();
+
+//screens
+
+const Feed = () => <Text>Feed</Text>
+const Article = () => <Text>Article</Text>
+
+function App() {
+    return <NavigationContainer>
+        <Drawer.Navigator>
+            <Drawer.Screen name="Feed" component={Feed} />
+            <Drawer.Screen name="Article" component={Article} />
+        </Drawer.Navigator>
+    </NavigationContainer>
+
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+});
+
+export default App
+
+Note:
+import 'react-native-gesture-handler';
+  It must be top of the code always.
+....................................................................................
+				Expo framework
+...................................................................................
+In order to work with Device features:
+
+When you are creating an app that requires access to potentially senstive information on user's device, such as their location, contacts,camera ...you need to ask for the user's permission first.
+
+
+How to get permission from the device?
+
+expo provides an module to work with permissions on both platforms.
+
+$ expo install expo-permissions
+
+Note : if you are working with particular device feature, device specific permission
+package must also be installed
+
+
+Permission type	Packages
+
+NOTIFICATIONS	expo-notifications
+
+USER_FACING_NOTIFICATIONS	expo-notifications
+
+LOCATION	expo-location
+
+CAMERA	expo-barcode-scanner expo-camera 
+        expo-face-detector expo-image-picker expo-media-library
+
+AUDIO_RECORDING	expo-av
+
+CONTACTS	expo-contacts
+
+MEDIA_LIBRARY MEDIA_LIBRARY_WRITE_ONLY	expo-image-picker
+                                        expo-media-library
+CALENDAR	expo-calendar
+
+REMINDERS	expo-calendar
+
+SYSTEM_BRIGHTNESS expo-brightness
+
+MOTION   expo-sensors	
+
+
+import * as Permission from 'expo-permission'
+
+Objects
+
+1.PermissionResponse
+
+ status: 'granted'|'denied'|'undermined'
+ granted: boolean
+ expires: 'never' | number
+
+Expo project setup:
+...................
+Expo Work flow:
+...............
+What is expo?
+
+ Expo is a framework and a platform for universal React applications. It is a set of tools and services built around React Native and native platforms that help you develop, build, deploy, and quickly iterate on iOS, Android, and web apps from the same JavaScript/TypeScript codebase.
+
+Expo apps can be created in two ways
+
+
+Managed Work flow:
+
+  With the managed workflow you only write JavaScript / TypeScript and Expo tools and services take care of everything else for you.
+
+  The managed workflow is kind of like Rails and Create React App, but for React Native.
+
+Apps are built with the managed workflow using the expo-cli, the Expo Go app on your mobile device, and our various services: push notifications, the build service, and over-the-air (OTA) updates. 
+
+Expo tries to manage as much of the complexity of building apps for you as we can, which is why we call it the managed workflow.
+
+ A developer using the managed workflow doesn't use Xcode or Android Studio, they just write JavaScript code and manage configuration for things like the app icon and splash screen through app.json.
+
+ The Expo SDK exposes an increasingly comprehensive set of APIs that give you the power to access device capabilities like the camera, biometric authentication, file system, haptics, and so on.
+
+Bare Work flow:
+
+  In the bare workflow you have full control over every aspect of the native project, and Expo tools and services are a little more limited.
+
+In the bare workflow the developer has complete control, along with the complexity that comes with that. You can use most APIs in the Expo SDK, but the build service and easy Configuration with app.json / app.config.js are not yet supported.
+
+Running your React Native application in case of expo work flow:
+.................................................................
+
+1.You can run and test app inside browser itself- this is not recommended for complex apps.
+
+2.You can run inside your device directly.
+  Expo offers called expo client.
+3.You can use emulators -Andorid virtual devices or emulators.
+
+Metro Bundler:
+-Online compiler, compiles code into react native 
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Tools:
+1.expo cli - to create manage react native projects
+2.expo go - which is an app used to run expo react native project.
+
+>npx create-expo-app my-expo-app
+√ Downloaded and extracted project files.
+√ Installed JavaScript dependencies.
+
+✅ Your project is ready!
+
+To run your project, navigate to the directory and run one of the following npm commands.
+
+- cd my-expo-app
+- npm run android
+- npm run ios # you need to use macOS to build the iOS project - use the Expo app if you need to do iOS development without a Mac
+- npm run web
+
+.....................................................................................
+			Device specific components 
+....................................................................................
+
+1.Location 
+
+How to use Location Component?
+
+=>Inside expo project.
+=>Can i use Expo Components - Location inside ReactNative Projects
+  Yes, but you have to do some configuration to in order to work properly
+
+The difference between expo projects and react native projects are most of the configuration expo takes automatically like meta files creating and updating
+ "AndroidManifest.xml"
+
+Steps:
+1.Ensure Platform Compatibility.
+2.npx expo install expo-location
+3.App configuration - app.json or app.config.js
+You can configure expo-location using its built-in config plugin if you use config plugins in your project (EAS Build or npx expo run:[android|ios]).
+
+
+app.json
+{
+  "expo": {
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+        }
+      ]
+    ]
+  }
+}
+eg:
+ "expo": {
+      "plugins": [
+        "expo-location"
+      ]
+    }
+
+Are you using this lib(expo-location) in bare react native project?
+Learn how to configure the native projects in the installation instructions in the expo-location repository.
+
+4.If you're using the iOS or Android Emulators, ensure that Location is enabled.
+https://docs.expo.dev/versions/latest/sdk/location/#enabling-emulator-location
+...
+
+Eg:
+import * as Location from 'expo-location';
+import { StyleSheet, Text, View } from 'react-native';
+import { useState, useEffect } from 'react'
+
+export default function App() {
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
+
+  let text = 'Waiting..';
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.paragraph}>{text}</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+....................................................................................
+				Expo-Network
+...................................................................................
+expo-network provides useful information about the device's network such as its IP address, MAC address, and airplane mode status.
+
+
+
+npx expo install expo-network
+
+app.json
+  "expo": {
+      "plugins": [
+        "expo-location",
+        "expo-network"
+      ]
+    },
+
+Configuration
+On Android, this module requires permissions to access the network and Wi-Fi state. The permissions ACCESS_NETWORK_STATE and ACCESS_WIFI_STATE are added automatically.
+
+import * as Network from 'expo-network';
+
+Network.getNetworkStateAsync()
+Network.getIpAddressAsync()
+Network.getMacAddressAsync(interfaceName?)
+Network.isAirplaneModeEnabledAsync() (Android only)
+
+eg:
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, Text } from 'react-native';
+import * as Network from 'expo-network';
+
+export default function App() {
+    const [network, setNetwork] = useState(null)
+    useEffect(() => {
+        (async () => {
+            const ip = await Network.getIpAddressAsync();
+            console.log(ip)
+            setNetwork(ip)
+        })();
+    }, []);
+
+    return (
+        <View style={styles.container}>
+            <Text>Network Module</Text>
+            <Text>Ip Address{network}</Text>
+        </View>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+});
+...................................................................................
+			Expo-Camera
+...................................................................................
+expo-camera provides a React component that renders a preview of the device's front or back camera. The camera's parameters like zoom, auto focus, white balance and flash mode are adjustable
+
+Steps:
+npx expo install expo-camera
+
+app.json
+  "expo": {
+      "plugins": [
+        "expo-location",
+        "expo-network",
+        "expo-camera"
+      ]
+ },
+
+eg:
+import { Camera, CameraType } from 'expo-camera';
+import { useState } from 'react';
+import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+export default function App() {
+  const [type, setType] = useState(CameraType.back);
+  const [permission, requestPermission] = Camera.useCameraPermissions();
+
+  if (!permission) ... 
+
+  if (!permission.granted) ... 
+
+  function toggleCameraType() {
+    setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
+  }
+
+  return (
+    <View style={styles.container}>
+      <Camera style={styles.camera} type={type}>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
+            <Text style={styles.text}>Flip Camera</Text>
+          </TouchableOpacity>
+        </View>
+      </Camera>
+    </View>
+  );
+}
+..................................................................................
+			Expo-Audio,Expo-font,Expo-assets
+..................................................................................
+To access audio  of the device.
+
+npx expo install expo-av
+
+app.json
+  "expo": {
+      "plugins": [
+        "expo-location",
+        "expo-network",
+        "expo-camera",
+        "expo-av"
+      ]
+    },
+
+
+
+/**
+ * @flow
+ */
+
+import React from "react";
+import {
+    Dimensions,
+    Image,
+    StyleSheet,
+    Text,
+    TouchableHighlight,
+    View
+} from "react-native";
+import { Asset } from "expo-asset";
+import {
+    Audio,
+    InterruptionModeAndroid,
+    InterruptionModeIOS,
+    ResizeMode,
+    Video
+} from "expo-av";
+import * as Font from "expo-font";
+import Slider from "@react-native-community/slider";
+
+import { MaterialIcons } from "@expo/vector-icons";
+
+class Icon {
+    constructor(module, width, height) {
+        this.module = module;
+        this.width = width;
+        this.height = height;
+        Asset.fromModule(this.module).downloadAsync();
+    }
+}
+
+class PlaylistItem {
+    constructor(name, uri, isVideo) {
+        this.name = name;
+        this.uri = uri;
+        this.isVideo = isVideo;
+    }
+}
+
+const PLAYLIST = [
+    new PlaylistItem(
+        "Comfort Fit - “Sorry”",
+        "https://s3.amazonaws.com/exp-us-standard/audio/playlist-example/Comfort_Fit_-_03_-_Sorry.mp3",
+        false
+    ),
+    new PlaylistItem(
+        "Big Buck Bunny",
+        "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
+        true
+    ),
+    new PlaylistItem(
+        "Mildred Bailey – “All Of Me”",
+        "https://ia800304.us.archive.org/34/items/PaulWhitemanwithMildredBailey/PaulWhitemanwithMildredBailey-AllofMe.mp3",
+        false
+    ),
+    new PlaylistItem(
+        "Popeye - I don't scare",
+        "https://ia800501.us.archive.org/11/items/popeye_i_dont_scare/popeye_i_dont_scare_512kb.mp4",
+        true
+    ),
+    new PlaylistItem(
+        "Podington Bear - “Rubber Robot”",
+        "https://s3.amazonaws.com/exp-us-standard/audio/playlist-example/Podington_Bear_-_Rubber_Robot.mp3",
+        false
+    )
+];
+
+const ICON_THROUGH_EARPIECE = "speaker-phone";
+const ICON_THROUGH_SPEAKER = "speaker";
+
+const ICON_PLAY_BUTTON = new Icon(
+    require("./assets/images/play_button.png"),
+    34,
+    51
+);
+const ICON_PAUSE_BUTTON = new Icon(
+    require("./assets/images/pause_button.png"),
+    34,
+    51
+);
+const ICON_STOP_BUTTON = new Icon(
+    require("./assets/images/stop_button.png"),
+    22,
+    22
+);
+const ICON_FORWARD_BUTTON = new Icon(
+    require("./assets/images/forward_button.png"),
+    33,
+    25
+);
+const ICON_BACK_BUTTON = new Icon(
+    require("./assets/images/back_button.png"),
+    33,
+    25
+);
+
+const ICON_LOOP_ALL_BUTTON = new Icon(
+    require("./assets/images/loop_all_button.png"),
+    77,
+    35
+);
+const ICON_LOOP_ONE_BUTTON = new Icon(
+    require("./assets/images/loop_one_button.png"),
+    77,
+    35
+);
+
+const ICON_MUTED_BUTTON = new Icon(
+    require("./assets/images/muted_button.png"),
+    67,
+    58
+);
+const ICON_UNMUTED_BUTTON = new Icon(
+    require("./assets/images/unmuted_button.png"),
+    67,
+    58
+);
+
+const ICON_TRACK_1 = new Icon(require("./assets/images/track_1.png"), 166, 5);
+const ICON_THUMB_1 = new Icon(require("./assets/images/thumb_1.png"), 18, 19);
+const ICON_THUMB_2 = new Icon(require("./assets/images/thumb_2.png"), 15, 19);
+
+const LOOPING_TYPE_ALL = 0;
+const LOOPING_TYPE_ONE = 1;
+const LOOPING_TYPE_ICONS = { 0: ICON_LOOP_ALL_BUTTON, 1: ICON_LOOP_ONE_BUTTON };
+
+const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get("window");
+const BACKGROUND_COLOR = "#FFF8ED";
+const DISABLED_OPACITY = 0.5;
+const FONT_SIZE = 14;
+const LOADING_STRING = "... loading ...";
+const BUFFERING_STRING = "...buffering...";
+const RATE_SCALE = 3.0;
+const VIDEO_CONTAINER_HEIGHT = (DEVICE_HEIGHT * 2.0) / 5.0 - FONT_SIZE * 2;
+
+export default class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.index = 0;
+        this.isSeeking = false;
+        this.shouldPlayAtEndOfSeek = false;
+        this.playbackInstance = null;
+        this.state = {
+            showVideo: false,
+            playbackInstanceName: LOADING_STRING,
+            loopingType: LOOPING_TYPE_ALL,
+            muted: false,
+            playbackInstancePosition: null,
+            playbackInstanceDuration: null,
+            shouldPlay: false,
+            isPlaying: false,
+            isBuffering: false,
+            isLoading: true,
+            fontLoaded: false,
+            shouldCorrectPitch: true,
+            volume: 1.0,
+            rate: 1.0,
+            videoWidth: DEVICE_WIDTH,
+            videoHeight: VIDEO_CONTAINER_HEIGHT,
+            poster: false,
+            useNativeControls: false,
+            fullscreen: false,
+            throughEarpiece: false
+        };
+    }
+
+    componentDidMount() {
+        Audio.setAudioModeAsync({
+            allowsRecordingIOS: false,
+            staysActiveInBackground: false,
+            interruptionModeIOS: InterruptionModeIOS.DoNotMix,
+            playsInSilentModeIOS: true,
+            shouldDuckAndroid: true,
+            interruptionModeAndroid: InterruptionModeAndroid.DoNotMix,
+            playThroughEarpieceAndroid: false
+        });
+        (async () => {
+            await Font.loadAsync({
+                ...MaterialIcons.font,
+                "cutive-mono-regular": require("./assets/fonts/CutiveMono-Regular.ttf")
+            });
+            this.setState({ fontLoaded: true });
+        })();
+    }
+
+    async _loadNewPlaybackInstance(playing) {
+        if (this.playbackInstance != null) {
+            await this.playbackInstance.unloadAsync();
+            // this.playbackInstance.setOnPlaybackStatusUpdate(null);
+            this.playbackInstance = null;
+        }
+
+        const source = { uri: PLAYLIST[this.index].uri };
+        const initialStatus = {
+            shouldPlay: playing,
+            rate: this.state.rate,
+            shouldCorrectPitch: this.state.shouldCorrectPitch,
+            volume: this.state.volume,
+            isMuted: this.state.muted,
+            isLooping: this.state.loopingType === LOOPING_TYPE_ONE
+            // // UNCOMMENT THIS TO TEST THE OLD androidImplementation:
+            // androidImplementation: 'MediaPlayer',
+        };
+
+        if (PLAYLIST[this.index].isVideo) {
+            await this._video.loadAsync(source, initialStatus);
+            // this._video.onPlaybackStatusUpdate(this._onPlaybackStatusUpdate);
+            this.playbackInstance = this._video;
+            const status = await this._video.getStatusAsync();
+        } else {
+            const { sound, status } = await Audio.Sound.createAsync(
+                source,
+                initialStatus,
+                this._onPlaybackStatusUpdate
+            );
+            this.playbackInstance = sound;
+        }
+
+        this._updateScreenForLoading(false);
+    }
+
+    _mountVideo = component => {
+        this._video = component;
+        this._loadNewPlaybackInstance(false);
+    };
+
+    _updateScreenForLoading(isLoading) {
+        if (isLoading) {
+            this.setState({
+                showVideo: false,
+                isPlaying: false,
+                playbackInstanceName: LOADING_STRING,
+                playbackInstanceDuration: null,
+                playbackInstancePosition: null,
+                isLoading: true
+            });
+        } else {
+            this.setState({
+                playbackInstanceName: PLAYLIST[this.index].name,
+                showVideo: PLAYLIST[this.index].isVideo,
+                isLoading: false
+            });
+        }
+    }
+
+    _onPlaybackStatusUpdate = status => {
+        if (status.isLoaded) {
+            this.setState({
+                playbackInstancePosition: status.positionMillis,
+                playbackInstanceDuration: status.durationMillis,
+                shouldPlay: status.shouldPlay,
+                isPlaying: status.isPlaying,
+                isBuffering: status.isBuffering,
+                rate: status.rate,
+                muted: status.isMuted,
+                volume: status.volume,
+                loopingType: status.isLooping ? LOOPING_TYPE_ONE : LOOPING_TYPE_ALL,
+                shouldCorrectPitch: status.shouldCorrectPitch
+            });
+            if (status.didJustFinish && !status.isLooping) {
+                this._advanceIndex(true);
+                this._updatePlaybackInstanceForIndex(true);
+            }
+        } else {
+            if (status.error) {
+                console.log(`FATAL PLAYER ERROR: ${status.error}`);
+            }
+        }
+    };
+
+    _onLoadStart = () => {
+        console.log(`ON LOAD START`);
+    };
+
+    _onLoad = status => {
+        console.log(`ON LOAD : ${JSON.stringify(status)}`);
+    };
+
+    _onError = error => {
+        console.log(`ON ERROR : ${error}`);
+    };
+
+    _onReadyForDisplay = event => {
+        const widestHeight =
+            (DEVICE_WIDTH * event.naturalSize.height) / event.naturalSize.width;
+        if (widestHeight > VIDEO_CONTAINER_HEIGHT) {
+            this.setState({
+                videoWidth:
+                    (VIDEO_CONTAINER_HEIGHT * event.naturalSize.width) /
+                    event.naturalSize.height,
+                videoHeight: VIDEO_CONTAINER_HEIGHT
+            });
+        } else {
+            this.setState({
+                videoWidth: DEVICE_WIDTH,
+                videoHeight:
+                    (DEVICE_WIDTH * event.naturalSize.height) / event.naturalSize.width
+            });
+        }
+    };
+
+    _onFullscreenUpdate = event => {
+        console.log(
+            `FULLSCREEN UPDATE : ${JSON.stringify(event.fullscreenUpdate)}`
+        );
+    };
+
+    _advanceIndex(forward) {
+        this.index =
+            (this.index + (forward ? 1 : PLAYLIST.length - 1)) % PLAYLIST.length;
+    }
+
+    async _updatePlaybackInstanceForIndex(playing) {
+        this._updateScreenForLoading(true);
+
+        this.setState({
+            videoWidth: DEVICE_WIDTH,
+            videoHeight: VIDEO_CONTAINER_HEIGHT
+        });
+
+        this._loadNewPlaybackInstance(playing);
+    }
+
+    _onPlayPausePressed = () => {
+        if (this.playbackInstance != null) {
+            if (this.state.isPlaying) {
+                this.playbackInstance.pauseAsync();
+            } else {
+                this.playbackInstance.playAsync();
+            }
+        }
+    };
+
+    _onStopPressed = () => {
+        if (this.playbackInstance != null) {
+            this.playbackInstance.stopAsync();
+        }
+    };
+
+    _onForwardPressed = () => {
+        if (this.playbackInstance != null) {
+            this._advanceIndex(true);
+            this._updatePlaybackInstanceForIndex(this.state.shouldPlay);
+        }
+    };
+
+    _onBackPressed = () => {
+        if (this.playbackInstance != null) {
+            this._advanceIndex(false);
+            this._updatePlaybackInstanceForIndex(this.state.shouldPlay);
+        }
+    };
+
+    _onMutePressed = () => {
+        if (this.playbackInstance != null) {
+            this.playbackInstance.setIsMutedAsync(!this.state.muted);
+        }
+    };
+
+    _onLoopPressed = () => {
+        if (this.playbackInstance != null) {
+            this.playbackInstance.setIsLoopingAsync(
+                this.state.loopingType !== LOOPING_TYPE_ONE
+            );
+        }
+    };
+
+    _onVolumeSliderValueChange = value => {
+        if (this.playbackInstance != null) {
+            this.playbackInstance.setVolumeAsync(value);
+        }
+    };
+
+    _trySetRate = async (rate, shouldCorrectPitch) => {
+        if (this.playbackInstance != null) {
+            try {
+                await this.playbackInstance.setRateAsync(rate, shouldCorrectPitch);
+            } catch (error) {
+                // Rate changing could not be performed, possibly because the client's Android API is too old.
+            }
+        }
+    };
+
+    _onRateSliderSlidingComplete = async value => {
+        this._trySetRate(value * RATE_SCALE, this.state.shouldCorrectPitch);
+    };
+
+    _onPitchCorrectionPressed = async value => {
+        this._trySetRate(this.state.rate, !this.state.shouldCorrectPitch);
+    };
+
+    _onSeekSliderValueChange = value => {
+        if (this.playbackInstance != null && !this.isSeeking) {
+            this.isSeeking = true;
+            this.shouldPlayAtEndOfSeek = this.state.shouldPlay;
+            this.playbackInstance.pauseAsync();
+        }
+    };
+
+    _onSeekSliderSlidingComplete = async value => {
+        if (this.playbackInstance != null) {
+            this.isSeeking = false;
+            const seekPosition = value * this.state.playbackInstanceDuration;
+            if (this.shouldPlayAtEndOfSeek) {
+                this.playbackInstance.playFromPositionAsync(seekPosition);
+            } else {
+                this.playbackInstance.setPositionAsync(seekPosition);
+            }
+        }
+    };
+
+    _getSeekSliderPosition() {
+        if (
+            this.playbackInstance != null &&
+            this.state.playbackInstancePosition != null &&
+            this.state.playbackInstanceDuration != null
+        ) {
+            return (
+                this.state.playbackInstancePosition /
+                this.state.playbackInstanceDuration
+            );
+        }
+        return 0;
+    }
+
+    _getMMSSFromMillis(millis) {
+        const totalSeconds = millis / 1000;
+        const seconds = Math.floor(totalSeconds % 60);
+        const minutes = Math.floor(totalSeconds / 60);
+
+        const padWithZero = number => {
+            const string = number.toString();
+            if (number < 10) {
+                return "0" + string;
+            }
+            return string;
+        };
+        return padWithZero(minutes) + ":" + padWithZero(seconds);
+    }
+
+    _getTimestamp() {
+        if (
+            this.playbackInstance != null &&
+            this.state.playbackInstancePosition != null &&
+            this.state.playbackInstanceDuration != null
+        ) {
+            return `${this._getMMSSFromMillis(
+                this.state.playbackInstancePosition
+            )} / ${this._getMMSSFromMillis(this.state.playbackInstanceDuration)}`;
+        }
+        return "";
+    }
+
+    _onPosterPressed = () => {
+        this.setState({ poster: !this.state.poster });
+    };
+
+    _onUseNativeControlsPressed = () => {
+        this.setState({ useNativeControls: !this.state.useNativeControls });
+    };
+
+    _onFullscreenPressed = () => {
+        try {
+            this._video.presentFullscreenPlayer();
+        } catch (error) {
+            console.log(error.toString());
+        }
+    };
+
+    _onSpeakerPressed = () => {
+        this.setState(
+            state => {
+                return { throughEarpiece: !state.throughEarpiece };
+            },
+            () =>
+                Audio.setAudioModeAsync({
+                    allowsRecordingIOS: false,
+                    interruptionModeIOS: InterruptionModeIOS.DoNotMix,
+                    playsInSilentModeIOS: true,
+                    shouldDuckAndroid: true,
+                    interruptionModeAndroid: InterruptionModeAndroid.DoNotMix,
+                    playThroughEarpieceAndroid: this.state.throughEarpiece
+                })
+        );
+    };
+
+    render() {
+        return !this.state.fontLoaded ? (
+            <View style={styles.emptyContainer} />
+        ) : (
+            <View style={styles.container}>
+                <View />
+                <View style={styles.nameContainer}>
+                    <Text style={[styles.text, { fontFamily: "cutive-mono-regular" }]}>
+                        {this.state.playbackInstanceName}
+                    </Text>
+                </View>
+                <View style={styles.space} />
+                <View style={styles.videoContainer}>
+                    <Video
+                        ref={this._mountVideo}
+                        style={[
+                            styles.video,
+                            {
+                                opacity: this.state.showVideo ? 1.0 : 0.0,
+                                width: this.state.videoWidth,
+                                height: this.state.videoHeight
+                            }
+                        ]}
+                        resizeMode={ResizeMode.CONTAIN}
+                        onPlaybackStatusUpdate={this._onPlaybackStatusUpdate}
+                        onLoadStart={this._onLoadStart}
+                        onLoad={this._onLoad}
+                        onError={this._onError}
+                        onFullscreenUpdate={this._onFullscreenUpdate}
+                        onReadyForDisplay={this._onReadyForDisplay}
+                        useNativeControls={this.state.useNativeControls}
+                    />
+                </View>
+                <View
+                    style={[
+                        styles.playbackContainer,
+                        {
+                            opacity: this.state.isLoading ? DISABLED_OPACITY : 1.0
+                        }
+                    ]}
+                >
+                    <Slider
+                        style={styles.playbackSlider}
+                        trackImage={ICON_TRACK_1.module}
+                        thumbImage={ICON_THUMB_1.module}
+                        value={this._getSeekSliderPosition()}
+                        onValueChange={this._onSeekSliderValueChange}
+                        onSlidingComplete={this._onSeekSliderSlidingComplete}
+                        disabled={this.state.isLoading}
+                    />
+                    <View style={styles.timestampRow}>
+                        <Text
+                            style={[
+                                styles.text,
+                                styles.buffering,
+                                { fontFamily: "cutive-mono-regular" }
+                            ]}
+                        >
+                            {this.state.isBuffering ? BUFFERING_STRING : ""}
+                        </Text>
+                        <Text
+                            style={[
+                                styles.text,
+                                styles.timestamp,
+                                { fontFamily: "cutive-mono-regular" }
+                            ]}
+                        >
+                            {this._getTimestamp()}
+                        </Text>
+                    </View>
+                </View>
+                <View
+                    style={[
+                        styles.buttonsContainerBase,
+                        styles.buttonsContainerTopRow,
+                        {
+                            opacity: this.state.isLoading ? DISABLED_OPACITY : 1.0
+                        }
+                    ]}
+                >
+                    <TouchableHighlight
+                        underlayColor={BACKGROUND_COLOR}
+                        style={styles.wrapper}
+                        onPress={this._onBackPressed}
+                        disabled={this.state.isLoading}
+                    >
+                        <Image style={styles.button} source={ICON_BACK_BUTTON.module} />
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        underlayColor={BACKGROUND_COLOR}
+                        style={styles.wrapper}
+                        onPress={this._onPlayPausePressed}
+                        disabled={this.state.isLoading}
+                    >
+                        <Image
+                            style={styles.button}
+                            source={
+                                this.state.isPlaying
+                                    ? ICON_PAUSE_BUTTON.module
+                                    : ICON_PLAY_BUTTON.module
+                            }
+                        />
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        underlayColor={BACKGROUND_COLOR}
+                        style={styles.wrapper}
+                        onPress={this._onStopPressed}
+                        disabled={this.state.isLoading}
+                    >
+                        <Image style={styles.button} source={ICON_STOP_BUTTON.module} />
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        underlayColor={BACKGROUND_COLOR}
+                        style={styles.wrapper}
+                        onPress={this._onForwardPressed}
+                        disabled={this.state.isLoading}
+                    >
+                        <Image style={styles.button} source={ICON_FORWARD_BUTTON.module} />
+                    </TouchableHighlight>
+                </View>
+                <View
+                    style={[
+                        styles.buttonsContainerBase,
+                        styles.buttonsContainerMiddleRow
+                    ]}
+                >
+                    <View style={styles.volumeContainer}>
+                        <TouchableHighlight
+                            underlayColor={BACKGROUND_COLOR}
+                            style={styles.wrapper}
+                            onPress={this._onMutePressed}
+                        >
+                            <Image
+                                style={styles.button}
+                                source={
+                                    this.state.muted
+                                        ? ICON_MUTED_BUTTON.module
+                                        : ICON_UNMUTED_BUTTON.module
+                                }
+                            />
+                        </TouchableHighlight>
+                        <Slider
+                            style={styles.volumeSlider}
+                            trackImage={ICON_TRACK_1.module}
+                            thumbImage={ICON_THUMB_2.module}
+                            value={1}
+                            onValueChange={this._onVolumeSliderValueChange}
+                        />
+                    </View>
+                    <TouchableHighlight
+                        underlayColor={BACKGROUND_COLOR}
+                        style={styles.wrapper}
+                        onPress={this._onLoopPressed}
+                    >
+                        <Image
+                            style={styles.button}
+                            source={LOOPING_TYPE_ICONS[this.state.loopingType].module}
+                        />
+                    </TouchableHighlight>
+                </View>
+                <View
+                    style={[
+                        styles.buttonsContainerBase,
+                        styles.buttonsContainerBottomRow
+                    ]}
+                >
+                    <TouchableHighlight
+                        underlayColor={BACKGROUND_COLOR}
+                        style={styles.wrapper}
+                        onPress={() => this._trySetRate(1.0, this.state.shouldCorrectPitch)}
+                    >
+                        <View style={styles.button}>
+                            <Text
+                                style={[styles.text, { fontFamily: "cutive-mono-regular" }]}
+                            >
+                                Rate:
+                            </Text>
+                        </View>
+                    </TouchableHighlight>
+                    <Slider
+                        style={styles.rateSlider}
+                        trackImage={ICON_TRACK_1.module}
+                        thumbImage={ICON_THUMB_1.module}
+                        value={this.state.rate / RATE_SCALE}
+                        onSlidingComplete={this._onRateSliderSlidingComplete}
+                    />
+                    <TouchableHighlight
+                        underlayColor={BACKGROUND_COLOR}
+                        style={styles.wrapper}
+                        onPress={this._onPitchCorrectionPressed}
+                    >
+                        <View style={styles.button}>
+                            <Text
+                                style={[styles.text, { fontFamily: "cutive-mono-regular" }]}
+                            >
+                                PC: {this.state.shouldCorrectPitch ? "yes" : "no"}
+                            </Text>
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        onPress={this._onSpeakerPressed}
+                        underlayColor={BACKGROUND_COLOR}
+                    >
+                        <MaterialIcons
+                            name={
+                                this.state.throughEarpiece
+                                    ? ICON_THROUGH_EARPIECE
+                                    : ICON_THROUGH_SPEAKER
+                            }
+                            size={32}
+                            color="black"
+                        />
+                    </TouchableHighlight>
+                </View>
+                <View />
+                {this.state.showVideo ? (
+                    <View>
+                        <View
+                            style={[
+                                styles.buttonsContainerBase,
+                                styles.buttonsContainerTextRow
+                            ]}
+                        >
+                            <View />
+                            <TouchableHighlight
+                                underlayColor={BACKGROUND_COLOR}
+                                style={styles.wrapper}
+                                onPress={this._onPosterPressed}
+                            >
+                                <View style={styles.button}>
+                                    <Text
+                                        style={[styles.text, { fontFamily: "cutive-mono-regular" }]}
+                                    >
+                                        Poster: {this.state.poster ? "yes" : "no"}
+                                    </Text>
+                                </View>
+                            </TouchableHighlight>
+                            <View />
+                            <TouchableHighlight
+                                underlayColor={BACKGROUND_COLOR}
+                                style={styles.wrapper}
+                                onPress={this._onFullscreenPressed}
+                            >
+                                <View style={styles.button}>
+                                    <Text
+                                        style={[styles.text, { fontFamily: "cutive-mono-regular" }]}
+                                    >
+                                        Fullscreen
+                                    </Text>
+                                </View>
+                            </TouchableHighlight>
+                            <View />
+                        </View>
+                        <View style={styles.space} />
+                        <View
+                            style={[
+                                styles.buttonsContainerBase,
+                                styles.buttonsContainerTextRow
+                            ]}
+                        >
+                            <View />
+                            <TouchableHighlight
+                                underlayColor={BACKGROUND_COLOR}
+                                style={styles.wrapper}
+                                onPress={this._onUseNativeControlsPressed}
+                            >
+                                <View style={styles.button}>
+                                    <Text
+                                        style={[styles.text, { fontFamily: "cutive-mono-regular" }]}
+                                    >
+                                        Native Controls:{" "}
+                                        {this.state.useNativeControls ? "yes" : "no"}
+                                    </Text>
+                                </View>
+                            </TouchableHighlight>
+                            <View />
+                        </View>
+                    </View>
+                ) : null}
+            </View>
+        );
+    }
+}
+
+const styles = StyleSheet.create({
+    emptyContainer: {
+        alignSelf: "stretch",
+        backgroundColor: BACKGROUND_COLOR
+    },
+    container: {
+        flex: 1,
+        flexDirection: "column",
+        justifyContent: "space-between",
+        alignItems: "center",
+        alignSelf: "stretch",
+        backgroundColor: BACKGROUND_COLOR
+    },
+    wrapper: {},
+    nameContainer: {
+        height: FONT_SIZE
+    },
+    space: {
+        height: FONT_SIZE
+    },
+    videoContainer: {
+        height: VIDEO_CONTAINER_HEIGHT
+    },
+    video: {
+        maxWidth: DEVICE_WIDTH
+    },
+    playbackContainer: {
+        flex: 1,
+        flexDirection: "column",
+        justifyContent: "space-between",
+        alignItems: "center",
+        alignSelf: "stretch",
+        minHeight: ICON_THUMB_1.height * 2.0,
+        maxHeight: ICON_THUMB_1.height * 2.0
+    },
+    playbackSlider: {
+        alignSelf: "stretch"
+    },
+    timestampRow: {
+        flex: 1,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        alignSelf: "stretch",
+        minHeight: FONT_SIZE
+    },
+    text: {
+        fontSize: FONT_SIZE,
+        minHeight: FONT_SIZE
+    },
+    buffering: {
+        textAlign: "left",
+        paddingLeft: 20
+    },
+    timestamp: {
+        textAlign: "right",
+        paddingRight: 20
+    },
+    button: {
+        backgroundColor: BACKGROUND_COLOR
+    },
+    buttonsContainerBase: {
+        flex: 1,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between"
+    },
+    buttonsContainerTopRow: {
+        maxHeight: ICON_PLAY_BUTTON.height,
+        minWidth: DEVICE_WIDTH / 2.0,
+        maxWidth: DEVICE_WIDTH / 2.0
+    },
+    buttonsContainerMiddleRow: {
+        maxHeight: ICON_MUTED_BUTTON.height,
+        alignSelf: "stretch",
+        paddingRight: 20
+    },
+    volumeContainer: {
+        flex: 1,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        minWidth: DEVICE_WIDTH / 2.0,
+        maxWidth: DEVICE_WIDTH / 2.0
+    },
+    volumeSlider: {
+        width: DEVICE_WIDTH / 2.0 - ICON_MUTED_BUTTON.width
+    },
+    buttonsContainerBottomRow: {
+        maxHeight: ICON_THUMB_1.height,
+        alignSelf: "stretch",
+        paddingRight: 20,
+        paddingLeft: 20
+    },
+    rateSlider: {
+        width: DEVICE_WIDTH / 2.0
+    },
+    buttonsContainerTextRow: {
+        maxHeight: FONT_SIZE,
+        alignItems: "center",
+        paddingRight: 20,
+        paddingLeft: 20,
+        minWidth: DEVICE_WIDTH,
+        maxWidth: DEVICE_WIDTH
+    }
+});
+.....................................................................................
+			Expo-Av : vidio + audio
+.....................................................................................
+
+steps:
+
+npx expo install expo-av
+
+app.json
+"expo": {
+      "plugins": [
+        "expo-location",
+        "expo-network",
+        "expo-camera",
+        "expo-av"
+      ]
+    },
+
+import React, { useState, useRef } from 'react';
+import { View, StyleSheet, Button } from 'react-native';
+import { Video } from 'expo-av';
+
+export default function App() {
+  const video = useRef(null);
+  const [status, setStatus] = useState({});
+  return (
+    <View style={styles.container}>
+      <Video
+        ref={video}
+        style={styles.video}
+        source={{
+          uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
+        }}
+        useNativeControls
+        resizeMode="contain"
+        isLooping
+        onPlaybackStatusUpdate={status => setStatus(() => status)}
+      />
+      <View style={styles.buttons}>
+        <Button
+          title={status.isPlaying ? 'Pause' : 'Play'}
+          onPress={() =>
+            status.isPlaying ? video.current.pauseAsync() : video.current.playAsync()
+          }
+        />
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#ecf0f1',
+  },
+  video: {
+    alignSelf: 'center',
+    width: 320,
+    height: 200,
+  },
+  buttons: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
