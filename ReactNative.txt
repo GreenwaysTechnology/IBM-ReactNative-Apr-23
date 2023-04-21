@@ -5779,3 +5779,626 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+.....................................................................................
+				Redux
+.....................................................................................
+..................................................................................
+				Redux
+...................................................................................
+
+What is Redux?
+   Redux is a lib,State management lib.
+
+As of now, we have kept state inside react component- View.
+To separate State from the view layer(react)
+
+We need to isloate state from the react and keep the state inside  lib called "Redux
+
+Redux is not only lib but also pattern for managining and updating application state, using event driven programming model called "actions"
+
+As of how state is encapulated inside component.
+
+How to declare state inside component?
+
+component-1
+
+ let state = {
+    counter:0
+ }
+ how to mutate -biz logic
+ setState(state=>{
+    return {...state,counter:state.counter+1}
+ })
+
+
+component-2
+ let state = {
+    counter:0
+ }
+ how to mutate -biz logic
+ setState(state=>{
+    return {...state,counter:state.counter+1}
+ })
+
+                        Redux and State  Management
+
+
+Redux is going to store all component state into one single object -Application State
+
+const appState = {
+  ....   
+}
+
+Core Concepts or Principles:
+............................
+
+1.State:
+   Redux maintains or stores the data in single object called as application state.
+2.Store
+   Store is object where Redux application state lives.
+   Store offers api to communicate from react and redux to react
+   Store is entry and exit point of react and redux
+3.reducer
+    You know very well how to mutate and where mutate state in react
+     ->Inside setState pure function.
+    Reducer is pure function which returns immutable object.
+
+4.actions
+    An action is like request in webserver, redux actions are plain javascript object
+ eg:
+  let counterAction = {
+	type:'counter/increment'
+  }
+ action may take input also called payload
+  let counterByAmount = {
+   type:'counter/increment',
+   payload:12
+ }
+
+5.Dispatcher 
+  It is transporter which transport action object from react to redux
+  Dispatcher is represented by a method called "dispatch"
+  dispatch is part of "Store object"
+  store.dispatch(action)
+..................................................................................					Building Redux
+...................................................................................
+
+in order to start redux we have two patterns
+
+1.old redux
+2.new redux called "Redux toolkit"
+
+We are going to use "Redux toolkit"
+
+
+import { StatusBar } from 'expo-status-bar';
+import { useState } from 'react';
+import { StyleSheet, Text, View, Button } from 'react-native';
+import { configureStore } from '@reduxjs/toolkit';
+import { Provider, useDispatch, useSelector } from 'react-redux';
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+//biz logic : reducer
+const counterReducer = (state = { counter: 10 }, action) => {
+  //switch case
+  switch (action.type) {
+    case 'counter/increment':
+      return { ...state, counter: state.counter + 1 }
+    default:
+      return state;
+  }
+}
+
+//create store object
+const store = configureStore({
+  reducer: {
+    //counterReducer: counterReducer
+    counterReducer
+  }
+})
+
+const Counter = props => {
+  // const [counter, setCounter] = useState(0)
+
+  const counter = useSelector(state => {
+    //state.reducerName.state
+    return state.counterReducer.counter
+  })
+  const dispatch = useDispatch();
+  const onIncrement = evt => {
+    //send request 
+    dispatch({ type: 'counter/increment' })
+  }
+  // const onIncrement = evt => {
+  //   setCounter(counter + 1)
+  // }
+  return <View>
+    <Text>Counter {counter}</Text>
+    <Button title="Increment" onPress={onIncrement} />
+  </View>
+}
+
+
+export default function App() {
+  return (
+    <Provider store={store}>
+      <View style={styles.container}>
+        <Counter />
+        <StatusBar style="auto" />
+      </View>
+    </Provider>
+
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+.....................................................................................
+import { StatusBar } from 'expo-status-bar';
+import { useState } from 'react';
+import { StyleSheet, Text, View, Button } from 'react-native';
+import { configureStore } from '@reduxjs/toolkit';
+import { Provider, useDispatch, useSelector } from 'react-redux';
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+//biz logic : reducer
+const counterReducer = (state = { counter: 10 }, action) => {
+    //switch case
+    switch (action.type) {
+        case 'counter/increment':
+            return { ...state, counter: state.counter + 1 }
+        default:
+            return state;
+    }
+}
+
+//Like Feature : 
+const LikeReducer = (state = { like: 10 }, action) => {
+    //switch case
+    switch (action.type) {
+        case 'like/increment':
+            return { ...state, like: state.like + 1 }
+        default:
+            return state;
+    }
+}
+//Dislike Reducer
+const DislikeReducer = (state = { dislike: 10 }, action) => {
+    //switch case
+    switch (action.type) {
+        case 'like/decrement':
+            return { ...state, like: state.dislike + 1 }
+        default:
+            return state;
+    }
+}
+
+//create store object
+const store = configureStore({
+    reducer: {
+        //counterReducer: counterReducer
+        counterReducer,
+        LikeReducer,
+        DislikeReducer
+    }
+})
+
+const Counter = props => {
+    const counter = useSelector(state => {
+        return state.counterReducer.counter
+    })
+    const dispatch = useDispatch();
+    const onIncrement = evt => {
+        //send request 
+        dispatch({ type: 'counter/increment' })
+    }
+
+    return <View>
+        <Text>Counter {counter}</Text>
+        <Button title="Increment" onPress={onIncrement} />
+    </View>
+}
+const Like = props => {
+    const myLike = useSelector(state => {
+        return state.LikeReducer.like
+    })
+    const dispatch = useDispatch();
+    const onIncrement = evt => {
+        //send request 
+        dispatch({ type: 'like/increment' })
+    }
+
+    return <View>
+        <Text>Like {myLike}</Text>
+        <Button title="Increment" onPress={onIncrement} />
+    </View>
+}
+const DisLike = props => {
+    const myDislike = useSelector(state => {
+        return state.DislikeReducer.dislike
+    })
+    const dispatch = useDispatch();
+    const onIncrement = evt => {
+        //send request 
+        dispatch({ type: 'like/dislike' })
+    }
+
+    return <View>
+        <Text>Dislike {myDislike}</Text>
+        <Button title="Increment" onPress={onIncrement} />
+    </View>
+}
+
+
+export default function App() {
+    return (
+        <Provider store={store}>
+            <View style={styles.container}>
+                <Counter />
+                <Like />
+                <DisLike/>
+                <StatusBar style="auto" />
+            </View>
+        </Provider>
+
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+});
+....................................................................................
+			import { StatusBar } from 'expo-status-bar';
+import { useState } from 'react';
+import { StyleSheet, Text, View, Button } from 'react-native';
+import { configureStore } from '@reduxjs/toolkit';
+import { Provider, useDispatch, useSelector } from 'react-redux';
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+//biz logic : reducer
+const counterReducer = (state = { counter: 10 }, action) => {
+    //switch case
+    switch (action.type) {
+        case 'counter/increment':
+            return { ...state, counter: state.counter + 1 }
+        default:
+            return state;
+    }
+}
+
+//Like Feature : 
+const LikeReducer = (state = { like: 10 }, action) => {
+    //switch case
+    switch (action.type) {
+        case 'like/increment':
+            return { ...state, like: state.like + 1 }
+        default:
+            return state;
+    }
+}
+//Dislike Reducer
+const DislikeReducer = (state = { dislike: 10 }, action) => {
+    //switch case
+    switch (action.type) {
+        case 'like/decrement':
+            return { ...state, like: state.dislike + 1 }
+        default:
+            return state;
+    }
+}
+
+//create store object
+const store = configureStore({
+    reducer: {
+        //counterReducer: counterReducer
+        counterReducer,
+        LikeReducer,
+        DislikeReducer
+    }
+})
+
+const Counter = props => {
+    const counter = useSelector(state => {
+        return state.counterReducer.counter
+    })
+    const dispatch = useDispatch();
+    const onIncrement = evt => {
+        //send request 
+        dispatch({ type: 'counter/increment' })
+    }
+
+    return <View>
+        <Text>Counter {counter}</Text>
+        <Button title="Increment" onPress={onIncrement} />
+    </View>
+}
+const Like = props => {
+    const myLike = useSelector(state => {
+        return state.LikeReducer.like
+    })
+    const dispatch = useDispatch();
+    const onIncrement = evt => {
+        //send request 
+        dispatch({ type: 'like/increment' })
+    }
+
+    return <View>
+        <Text>Like {myLike}</Text>
+        <Button title="Like" onPress={onIncrement} />
+    </View>
+}
+const DisLike = props => {
+    const myDislike = useSelector(state => {
+        return state.DislikeReducer.dislike
+    })
+    const dispatch = useDispatch();
+    const onIncrement = evt => {
+        //send request 
+        dispatch({ type: 'like/dislike' })
+    }
+
+    return <View>
+        <Text>Dislike {myDislike}</Text>
+        <Button title="Dislike" onPress={onIncrement} />
+    </View>
+}
+
+
+export default function App() {
+    return (
+        <Provider store={store}>
+            <View style={styles.container}>
+                <Counter />
+                <Like />
+                <DisLike/>
+                <StatusBar style="auto" />
+            </View>
+        </Provider>
+
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+});
+....................................................................................
+			 Redux-React Native Router
+....................................................................................
+
+npm install @react-navigation/native @react-navigation/native-stack
+npx expo install react-native-screens react-native-safe-area-context
+
+
+import { StatusBar } from 'expo-status-bar';
+import { useState } from 'react';
+import { StyleSheet, Text, View, Button } from 'react-native';
+import { configureStore } from '@reduxjs/toolkit';
+import { Provider, useDispatch, useSelector } from 'react-redux';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+//biz logic : reducer
+const counterReducer = (state = { counter: 10 }, action) => {
+    //switch case
+    switch (action.type) {
+        case 'counter/increment':
+            return { ...state, counter: state.counter + 1 }
+        default:
+            return state;
+    }
+}
+
+//Like Feature : 
+const LikeReducer = (state = { like: 10 }, action) => {
+    //switch case
+    switch (action.type) {
+        case 'like/increment':
+            return { ...state, like: state.like + 1 }
+        default:
+            return state;
+    }
+}
+//Dislike Reducer
+const DislikeReducer = (state = { dislike: 10 }, action) => {
+    //switch case
+    switch (action.type) {
+        case 'like/decrement':
+            return { ...state, like: state.dislike + 1 }
+        default:
+            return state;
+    }
+}
+
+//create store object
+const store = configureStore({
+    reducer: {
+        //counterReducer: counterReducer
+        counterReducer,
+        LikeReducer,
+        DislikeReducer
+    }
+})
+
+const Counter = props => {
+    const counter = useSelector(state => {
+        return state.counterReducer.counter
+    })
+    const dispatch = useDispatch();
+    const onIncrement = evt => {
+        //send request 
+        dispatch({ type: 'counter/increment' })
+    }
+
+    return <View>
+        <Text>Counter {counter}</Text>
+        <Button title="Increment" onPress={onIncrement} />
+    </View>
+}
+const Like = props => {
+    const myLike = useSelector(state => {
+        return state.LikeReducer.like
+    })
+    const dispatch = useDispatch();
+    const onIncrement = evt => {
+        //send request 
+        dispatch({ type: 'like/increment' })
+    }
+
+    return <View>
+        <Text>Like {myLike}</Text>
+        <Button title="Like" onPress={onIncrement} />
+    </View>
+}
+const DisLike = props => {
+    const myDislike = useSelector(state => {
+        return state.DislikeReducer.dislike
+    })
+    const dispatch = useDispatch();
+    const onIncrement = evt => {
+        //send request 
+        dispatch({ type: 'like/dislike' })
+    }
+
+    return <View>
+        <Text>Dislike {myDislike}</Text>
+        <Button title="Dislike" onPress={onIncrement} />
+    </View>
+}
+
+const HomeScreen = props => {
+    return <View style={styles.container}>
+        <Button title="Counter" onPress={() => {
+            props.navigation.navigate('Counter')
+
+        }} />
+        <Button title="Like" onPress={() => {
+            props.navigation.navigate('Like')
+
+        }} /> 
+        <Button title="Dislike" onPress={() => {
+            props.navigation.navigate('Dislike')
+
+        }} />
+    </View>
+}
+const CounterScreen = props => {
+    return <View style={styles.container}>
+        <Counter />
+    </View>
+}
+const LikeScreen = props => {
+    return <View style={styles.container}>
+        <Like />
+    </View>
+}
+const DisLikeScreen = props => {
+    return <View style={styles.container}>
+        <DisLike />
+    </View>
+}
+
+
+export default function App() {
+    return (
+        <Provider store={store}>
+            <NavigationContainer>
+                <Stack.Navigator>
+                    <Stack.Screen
+                        name="Home"
+                        component={HomeScreen}
+                        options={{ title: 'Redux App' }}
+                    />
+                    <Stack.Screen
+                        name="Counter"
+                        component={CounterScreen}
+                        options={{ title: 'Counter' }}
+                    />
+                    <Stack.Screen
+                        name="Like"
+                        component={LikeScreen}
+                        options={{ title: 'Like' }}
+                    />
+                    <Stack.Screen
+                        name="Dislike"
+                        component={DisLikeScreen}
+                        options={{ title: 'Dislike' }}
+                    />
+                </Stack.Navigator>
+            </NavigationContainer>
+            {/* <StatusBar style="auto" /> */}
+        </Provider>
+
+
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+});
+....................................................................................
+			 Folder Structure and React native projects
+
+
+components
+screens-navigation
+redux
+
+App
+ |
+ components
+   |
+   counter.jsx
+   like.jsx
+   dislike.jsx
+
+ screens
+  |
+  HomeScreen.jsx
+  LikeScreen.jsx
+
+ store
+   ->store.js
+ reducers
+   ->counter.reducer.js
+   ->like.reducer.js
+ assets
+   ---images
+ apis
+  -customer.api
+.....................................................................................
+   
+
+
+
+
+
+
+
